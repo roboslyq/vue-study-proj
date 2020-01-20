@@ -8,13 +8,13 @@ const commonRoutes = [
         path: '/login',
         name: 'login',
         meta: { title: '登录' },
-        component: () => import('../components/Login.vue'),
+        component: () => import('../components/logon/Login'),
     },
     {
         path: '/404',
         name: '404',
         meta: { title: '404' },
-        component: () => import('../components/404.vue'),
+        component: () => import('../components/common/404'),
     },
     { path: '/', redirect: '/home' },
 ]
@@ -25,7 +25,7 @@ export const asyncRoutes = {
         path: 'home',
         name: 'home',
         meta: { title: '主页' },
-        component: () => import('../views/Home.vue'),
+        component: () => import('../views/home/Home.vue'),
     },
     t1: {
         path: 't1',
@@ -37,19 +37,19 @@ export const asyncRoutes = {
         path: 'password',
         name: 'password',
         meta: { title: '修改密码' },
-        component: () => import('../views/Password.vue'),
+        component: () => import('../views/password/Password.vue'),
     },
     msg: {
         path: 'msg',
         name: 'msg',
         meta: { title: '通知消息' },
-        component: () => import('../views/Msg.vue'),
+        component: () => import('../views/common/Msg.vue'),
     },
     userinfo: {
         path: 'userinfo',
         name: 'userinfo',
         meta: { title: '用户信息' },
-        component: () => import('../views/UserInfo.vue'),
+        component: () => import('../views/user/UserInfo.vue'),
     },
 }
 

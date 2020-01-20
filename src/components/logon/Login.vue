@@ -1,7 +1,7 @@
 <template>
     <div class="login-vue" :style="bg">
         <div class="container">
-            <p class="title">WELCOME</p>
+            <p class="title">ECP后台管理系统登录</p>
             <div class="input-c">
                 <Input prefix="ios-contact" v-model="account" placeholder="用户名" clearable @on-blur="verifyAccount"/>
                 <p class="error">{{accountError}}</p>
@@ -10,7 +10,7 @@
                 <Input type="password" v-model="pwd" prefix="md-lock" placeholder="密码" clearable @on-blur="verifyPwd"/>
                 <p class="error">{{pwdError}}</p>
             </div>
-            <Button :loading="isShowLoading" class="submit" type="primary" @click="submit">登陆</Button>
+            <Button :loading="isShowLoading" class="submit" type="primary" @click="submit">登录</Button>
             <p class="account"><span @click="register">注册账号</span> | <span @click="forgetPwd">忘记密码</span></p>
         </div>
     </div>
@@ -30,7 +30,7 @@ export default {
         }
     },
     created() {
-        this.bg.backgroundImage = 'url(' + require('../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
+        this.bg.backgroundImage = 'url(' + require('../../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
     },
     watch: {
         $route: {
@@ -65,8 +65,8 @@ export default {
             if (this.account === 'admin' && this.pwd === 'admin') {
                 this.isShowLoading = true
                 // 登陆成功 设置用户信息
-                localStorage.setItem('userImg', 'https://avatars3.githubusercontent.com/u/22117876?s=460&v=4')
-                localStorage.setItem('userName', '小明')
+                localStorage.setItem('userImg', 'https://avatars3.githubusercontent.com/u/19337417?s=400&amp')
+                localStorage.setItem('userName', 'roboslyq')
                 // 登陆成功 假设这里是后台返回的 token
                 localStorage.setItem('token', 'i_am_token')
                 this.$router.push({ path: this.redirect || '/' })

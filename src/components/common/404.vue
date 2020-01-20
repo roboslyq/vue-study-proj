@@ -11,7 +11,7 @@ export default {
     name: 'error',
     data() {
         return {
-            img: require('../assets/imgs/404.jpg'),
+            img: require('../../assets/imgs/404.jpg'),
         }
     },
     methods: {
