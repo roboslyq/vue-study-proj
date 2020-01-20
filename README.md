@@ -1,5 +1,5 @@
 # ecp-admin-ui
-ecp后台后台管理系统基础模板<br>
+ecp后台ECP后台管理系统基础模板<br>
 
 # 感谢
 > https://github.com/woai3c/vue-admin-template
