@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import qs from 'qs'
+
 export default {
     name: 'login',
     data() {
@@ -64,12 +66,37 @@ export default {
         submit() {
             if (this.account === 'admin' && this.pwd === 'admin') {
                 this.isShowLoading = true
-                // 登陆成功 设置用户信息
-                localStorage.setItem('userImg', 'https://avatars3.githubusercontent.com/u/19337417?s=400&amp')
-                localStorage.setItem('userName', 'roboslyq')
-                // 登陆成功 假设这里是后台返回的 token
-                localStorage.setItem('token', 'i_am_token')
-                this.$router.push({ path: this.redirect || '/' })
+                // this.$axios.post('oauth/auth', {
+                //     username: 'luoyq',
+                //     password: '123456' },
+                // response => {
+                //     if (response.status >= 200 && response.status < 300) {
+                //         // 请求成功，response为成功信息参数
+                //         console.log(response.data)
+                //         // 登陆成功 设置用户信息
+                //         localStorage.setItem('userImg', 'https://avatars3.githubusercontent.com/u/19337417?s=400&amp')
+                //         localStorage.setItem('userName', 'roboslyq')
+                //         // 登陆成功 假设这里是后台返回的 token
+                //         localStorage.setItem('token', 'i_am_token')
+                //         this.$router.push({ path: this.redirect || '/' })
+                //     } else {
+                //         // 请求失败，response为失败信息
+                //         console.log(response.message)
+                //     }
+                // })
+                const data = { username: 'luoyq', password: '123456' }
+                this.$axios.post('/oauth/auth', qs.stringify(data))
+                .then(response => {
+                    console.log(response)
+                    // 登陆成功 设置用户信息
+                    localStorage.setItem('userImg', 'https://avatars3.githubusercontent.com/u/19337417?s=400&amp')
+                    localStorage.setItem('userName', 'roboslyq')
+                    // 登陆成功 假设这里是后台返回的 token
+                    localStorage.setItem('token', 'i_am_token')
+                    this.$router.push({ path: this.redirect || '/' })
+                }).catch(error => {
+                    console.log(error)
+                })
             } else {
                 if (this.account !== 'admin') {
                     this.accountError = '账号为admin'
@@ -79,6 +106,7 @@ export default {
                     this.pwdError = '密码为admin'
                 }
             }
+            this.isShowLoading = false
         },
     },
 }

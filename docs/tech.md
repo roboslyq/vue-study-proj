@@ -69,3 +69,10 @@ npm run xxx，并不是你想运行就运行的，只有在 package.json scripts
 
 ### 4、npm参考资料
 > http://www.ruanyifeng.com/blog/2016/01/npm-install.html
+
+
+# 常见Js工具包
+## axios
+## qs
+## vue
+## element

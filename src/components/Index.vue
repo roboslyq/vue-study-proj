@@ -168,6 +168,7 @@ export default {
         this.$axios.interceptors.request.use(config => {
             this.showLoading = true
             // 在发送请求之前做些什么
+            config.headers.Authorization = 'Basic ZGVtb19jbGllbnQ6MTIzNDU2'
             return config
         }, error => {
             this.showLoading = false

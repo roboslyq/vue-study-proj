@@ -3,9 +3,10 @@ module.exports = {
         open: true,//启动时自动打开浏览器
         proxy: {
             '/api': {
-                target: 'http://xxxx/device/', // 对应自己的接口
+                target: 'http://127.0.0.1:8765/', // 对应自己的接口
                 changeOrigin: true,
                 ws: true,
+                secure:false,
                 pathRewrite: {
                     '^/api': '',
                 },
