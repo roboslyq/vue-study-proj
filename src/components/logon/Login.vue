@@ -23,8 +23,8 @@ export default {
     name: 'login',
     data() {
         return {
-            account: 'admin',
-            pwd: 'admin',
+            account: 'luoyq',
+            pwd: '123456',
             accountError: '',
             pwdError: '',
             isShowLoading: false,
@@ -44,15 +44,15 @@ export default {
     },
     methods: {
         verifyAccount() {
-            if (this.account !== 'admin') {
-                this.accountError = '账号为admin'
+            if (this.account == '') {
+                this.accountError = '请输入账号'
             } else {
                 this.accountError = ''
             }
         },
         verifyPwd() {
-            if (this.pwd !== 'admin') {
-                this.pwdError = '密码为admin'
+            if (this.pwd == '') {
+                this.pwdError = '请输入密码'
             } else {
                 this.pwdError = ''
             }
@@ -64,49 +64,28 @@ export default {
 
         },
         submit() {
-            if (this.account === 'admin' && this.pwd === 'admin') {
-                this.isShowLoading = true
-                // this.$axios.post('oauth/auth', {
-                //     username: 'luoyq',
-                //     password: '123456' },
-                // response => {
-                //     if (response.status >= 200 && response.status < 300) {
-                //         // 请求成功，response为成功信息参数
-                //         console.log(response.data)
-                //         // 登陆成功 设置用户信息
-                //         localStorage.setItem('userImg', 'https://avatars3.githubusercontent.com/u/19337417?s=400&amp')
-                //         localStorage.setItem('userName', 'roboslyq')
-                //         // 登陆成功 假设这里是后台返回的 token
-                //         localStorage.setItem('token', 'i_am_token')
-                //         this.$router.push({ path: this.redirect || '/' })
-                //     } else {
-                //         // 请求失败，response为失败信息
-                //         console.log(response.message)
-                //     }
-                // })
-                const data = { username: 'luoyq', password: '123456' }
-                this.$axios.post('/oauth/auth', qs.stringify(data))
-                .then(response => {
-                    console.log(response)
-                    // 登陆成功 设置用户信息
-                    localStorage.setItem('userImg', 'https://avatars3.githubusercontent.com/u/19337417?s=400&amp')
-                    localStorage.setItem('userName', 'roboslyq')
-                    // 登陆成功 假设这里是后台返回的 token
-                    localStorage.setItem('token', 'i_am_token')
-                    this.$router.push({ path: this.redirect || '/' })
-                }).catch(error => {
-                    console.log(error)
-                })
-            } else {
-                if (this.account !== 'admin') {
-                    this.accountError = '账号为admin'
+            // debugger
+            this.isShowLoading = true
+            const data = { username: this.account, password: this.pwd }
+            this.$axios.post('/oauth/auth', qs.stringify(data))
+            .then(response => {
+                console.log(response)
+                this.isShowLoading = false
+                // 登陆成功 设置用户信息（TODO：目前设置为我自己的github头像，实际生产根据实际情况使用）
+                localStorage.setItem('userImg', 'https://avatars3.githubusercontent.com/u/19337417?s=400&amp')
+                localStorage.setItem('userName', this.account)
+                // 登陆成功 假设这里是后台返回的 token
+                if (response.data == null || response.data == undefined) {
+                    localStorage.setItem('token', response.access_token)
+                } else {
+                    localStorage.setItem('token', response.data.access_token)
                 }
-
-                if (this.pwd !== 'admin') {
-                    this.pwdError = '密码为admin'
-                }
-            }
-            this.isShowLoading = false
+                this.$router.push({ path: this.redirect || '/' })
+            }).catch(error => {
+                console.log(error)
+                this.pwdError = '用户名或密码错误'
+                this.isShowLoading = false
+            })
         },
     },
 }
