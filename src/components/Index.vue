@@ -488,7 +488,8 @@ export default {
             this.menuCache = data
         },
         processNameToTitle(obj, data, text) {
-            if (data.name) {
+            debugger
+            if (data.name && data.name.length > 0) {
                 obj[data.name] = data.text
                 this.paths[data.name] = text ? `${text} / ${data.text}` : data.text
             }

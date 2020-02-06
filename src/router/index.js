@@ -27,18 +27,80 @@ export const asyncRoutes = {
         meta: { title: '主页' },
         component: () => import('../views/home/Home.vue'),
     },
-    t1: {
-        path: 't1',
-        name: 't1',
-        meta: { title: '表格' },
-        component: () => import('../views/T1.vue'),
+    // 系统管理
+    menuManager: {
+        path: 'menuManager',
+        name: 'menuManager',
+        meta: { title: '菜单管理' },
+        component: () => import('../views/systemmanager/menuManager.vue'),
+    },
+    roleAuthManager: {
+        path: 'roleAuthManager',
+        name: 'roleAuthManager',
+        meta: { title: '角色权限管理' },
+        component: () => import('../views/systemmanager/roleAuthManager.vue'),
+    },
+    roleTypeManager: {
+        path: 'roleTypeManager',
+        name: 'roleTypeManager',
+        meta: { title: '角色类型管理' },
+        component: () => import('../views/systemmanager/roleTypeManager.vue'),
+    },
+    gateLogManager: {
+        path: 'gateLogManager',
+        name: 'gateLogManager',
+        meta: { title: '操作日志管理' },
+        component: () => import('../views/systemmanager/gateLogManager.vue'),
+    },
+    // 用户信息管理
+    userManager: {
+        path: 'userManager',
+        name: 'userManager',
+        meta: { title: '修改密码' },
+        component: () => import('../views/usermanager/userManager.vue'),
     },
     password: {
         path: 'password',
         name: 'password',
         meta: { title: '修改密码' },
-        component: () => import('../views/password/Password.vue'),
+        component: () => import('../views/usermanager/password.vue'),
     },
+    // 服务权限管理
+    serviceManager: {
+        path: 'serviceManager',
+        name: 'serviceManager',
+        meta: { title: '修改密码' },
+        component: () => import('../views/servicemanager/serviceManager.vue'),
+    },
+    // 监控模块管理
+    registryManager: {
+        path: 'registryManager',
+        name: 'registryManager',
+        meta: { title: '修改密码' },
+        component: () => import('../views/monitormanager/registryManager.vue'),
+    },
+    // 服务权限管理
+    monitorManager: {
+        path: 'monitorManager',
+        name: 'monitorManager',
+        meta: { title: '修改密码' },
+        component: () => import('../views/monitormanager/monitorManager.vue'),
+    },
+    // 服务权限管理
+    apmManager: {
+        path: 'apmManager',
+        name: 'apmManager',
+        meta: { title: '修改密码' },
+        component: () => import('../views/monitormanager/apmManager.vue'),
+    },
+    // 开发工具管理
+    generate: {
+        path: 'generate',
+        name: 'generate',
+        meta: { title: '代码生成' },
+        component: () => import('../views/tools/generate.vue'),
+    },
+    // 右上角
     msg: {
         path: 'msg',
         name: 'msg',

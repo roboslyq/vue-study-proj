@@ -26,9 +26,9 @@ export default function createRoutes(data) {
 }
 
 function generateRoutes(children, item) {
-    if (item.name) {
+    if (item.name && item.name.length > 0) {
         children.push(asyncRoutes[item.name])
-    } else if (item.children) {
+    } else if (item.children && item.children.length > 0) {
         item.children.forEach(e => {
             generateRoutes(children, e)
         })
