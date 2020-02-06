@@ -12,13 +12,14 @@
             accordion :open-names="openMenus" :active-name="currentPage" @on-open-change="menuChange">
                 <!-- 动态菜单 -->
                 <div v-for="(item, index) in menuItems" :key="index">
-                    <Submenu :class="isShowAsideTitle? '' : 'shrink'" v-if="item.children" :name="index">
+                    <Submenu :class="isShowAsideTitle? '' : 'shrink'" v-if="item.children && item.children.length > 0" :name="index">
                         <template slot="title">
                             <Icon :size="item.size" :type="item.type"/>
                             <span v-show="isShowAsideTitle">{{item.text}}</span>
                         </template>
                         <div v-for="(subItem, i) in item.children" :key="index + i">
-                            <Submenu :class="isShowAsideTitle? '' : 'shrink'" v-if="subItem.children" :name="index + '-' + i">
+                            <Submenu :class="isShowAsideTitle? '' : 'shrink'" v-if="subItem.children && subItem.children.length > 0"
+                                 :name="index + '-' + i">
                                 <template slot="title">
                                     <Icon :size="subItem.size" :type="subItem.type"/>
                                     <span v-show="isShowAsideTitle">{{subItem.text}}</span>
@@ -145,7 +146,7 @@ export default {
             isShowRouter: true,
             msgNum: '10', // 新消息条数
             // 标签栏         标签标题     路由名称
-            // 数据格式 {text: '首页', name: 'home'}
+            // 数据格式 {text: '主页', name: 'home'}
             // 用于缓存打开的路由 在标签栏上展示
             tagsArry: [],
             arrowUp: false, // 用户详情向上箭头
@@ -163,6 +164,8 @@ export default {
         }
     },
     created() {
+        // 菜单初始化vuex.store
+        this.$store.dispatch('getMenus')
         // 已经为ajax请求设置了loading 请求前自动调用 请求完成自动结束
         // 添加请求拦截器
         this.$axios.interceptors.request.use(config => {
@@ -201,20 +204,16 @@ export default {
             text: this.nameToTitle[name],
             name,
         })
-
         // 根据路由打开对应的菜单栏
         this.openMenus = this.getMenus(name)
         this.$nextTick(() => {
             this.$refs.asideMenu.updateOpened()
         })
-
         // 设置用户信息
         this.userName = localStorage.getItem('userName')
         this.userImg = localStorage.getItem('userImg')
-
         this.main = document.querySelector('.sec-right')
         this.asideArrowIcons = document.querySelectorAll('aside .ivu-icon-ios-arrow-down')
-
         // 监听窗口大小 自动收缩侧边栏
         this.monitorWindowSize()
     },
@@ -226,7 +225,6 @@ export default {
                 this.crumbs = '404'
                 return
             }
-
             if (!this.keepAliveData.includes(name)) {
                 // 如果标签超过8个 则将第一个标签删除
                 if (this.tagsArry.length == 8) {
@@ -234,7 +232,6 @@ export default {
                 }
                 this.tagsArry.push({ name, text: this.nameToTitle[name] })
             }
-
             setTimeout(() => {
                 this.crumbs = this.paths[name]
             }, 0)
@@ -256,7 +253,6 @@ export default {
             this.menuItems.forEach(e => {
                 this.processNameToTitle(obj, e)
             })
-
             return obj
         },
     },
@@ -271,8 +267,7 @@ export default {
                 if (item.text == tagTitle) {
                     return menus
                 }
-
-                if (item.children) {
+                if (item.children && item.children.length > 0) {
                     for (let j = 0, ll = item.children.length; j < ll; j++) {
                         const child = item.children[j]
                         menus[1] = i + '-' + j
@@ -280,8 +275,7 @@ export default {
                         if (child.text == tagTitle) {
                             return menus
                         }
-
-                        if (child.children) {
+                        if (child.children && child.children.length > 0) {
                             for (let k = 0, lll = child.children.length; k < lll; k++) {
                                 const grandson = child.children[k]
                                 menus[2] = i + '-' + j + '-' + k
@@ -294,24 +288,20 @@ export default {
                 }
             }
         },
-
         monitorWindowSize() {
             let w = document.documentElement.clientWidth || document.body.clientWidth
             if (w < 1300) {
                 this.shrinkAside()
             }
-
             window.onresize = () => {
                 // 可视窗口宽度太小 自动收缩侧边栏
                 if (w < 1300 && this.isShowAsideTitle
                     && w > (document.documentElement.clientWidth || document.body.clientWidth)) {
                     this.shrinkAside()
                 }
-
                 w = document.documentElement.clientWidth || document.body.clientWidth
             }
         },
-
         // 判断当前标签页是否激活状态
         isActive(name) {
             return this.$route.name === name
@@ -321,7 +311,6 @@ export default {
             this.currentPage = name
             this.crumbs = this.paths[name]
             this.$router.replace({ name, params })
-
             if (!this.keepAliveData.includes(name)) {
                 // 如果标签超过8个 则将第一个标签删除
                 if (this.tagsArry.length == 8) {
@@ -373,13 +362,11 @@ export default {
             for (let i = 0, len = this.asideArrowIcons.length; i < len; i++) {
                 this.asideArrowIcons[i].style.display = 'none'
             }
-
             this.isShowAsideTitle = false
             this.openMenus = []
             this.$nextTick(() => {
                 this.$refs.asideMenu.updateOpened()
             })
-
             setTimeout(() => {
                 this.asideClassName = ''
                 this.main.style.marginLeft = '90px'
@@ -392,7 +379,6 @@ export default {
                 for (let i = 0, len = this.asideArrowIcons.length; i < len; i++) {
                     this.asideArrowIcons[i].style.display = 'block'
                 }
-
                 this.openMenus = this.menuCache
                 this.$nextTick(() => {
                     this.$refs.asideMenu.updateOpened()
@@ -440,7 +426,7 @@ export default {
                     }
                 }
             } else if (name != this.home) {
-                // 如果没有标签则跳往首页
+                // 如果没有标签则跳往主页
                 this.gotoPage(this.home)
             } else {
                 this.reloadPage()
@@ -506,7 +492,7 @@ export default {
                 obj[data.name] = data.text
                 this.paths[data.name] = text ? `${text} / ${data.text}` : data.text
             }
-            if (data.children) {
+            if (data.children && data.children.length > 0) {
                 data.children.forEach(e => {
                     this.processNameToTitle(obj, e, text ? `${text} / ${data.text}` : data.text)
                 })
