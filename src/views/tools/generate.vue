@@ -6,7 +6,10 @@
                 <Input search placeholder="请输入查询内容" style="width: auto" />
             </div>
             <br>
-            <Table max-height="670" border stripe :columns="columns1" :data="data1"></Table>
+            <Button @click="handleSelectAll(true)">全选</Button>
+            <Button @click="handleSelectAll(false)">取消全选</Button>
+            <Button @click="generateSelected()">生成</Button>
+            <Table border ref="selection"  :columns="tableColumns" :data="tableData"></Table>
             <br>
             <Page :total="100" show-sizer show-elevator/>
         </div>
@@ -15,266 +18,88 @@
 
 <script>
 export default {
-    name: 't1',
+    name: 'tools-generator',
     data() {
         return {
-            columns1: [
+            tableColumns: [
                 {
-                    title: 'Name',
-                    key: 'name',
+                    type: 'selection',
+                    width: 60,
+                    align: 'center',
                 },
                 {
-                    title: 'Age',
-                    key: 'age',
+                    title: '表名',
+                    key: 'tableName',
                 },
                 {
-                    title: 'Address',
-                    key: 'address',
-                },
-            ],
-            data1: [
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park',
-                    date: '2016-10-03',
+                    title: 'DB引擎',
+                    key: 'engine',
                 },
                 {
-                    name: 'Jim Green',
-                    age: 24,
-                    address: 'London No. 1 Lake Park',
-                    date: '2016-10-01',
+                    title: '表说明',
+                    key: 'tableComment',
                 },
                 {
-                    name: 'Joe Black',
-                    age: 30,
-                    address: 'Sydney No. 1 Lake Park',
-                    date: '2016-10-02',
-                },
-                {
-                    name: 'Jon Snow',
-                    age: 26,
-                    address: 'Ottawa No. 2 Lake Park',
-                    date: '2016-10-04',
-                },
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park',
-                    date: '2016-10-03',
-                },
-                {
-                    name: 'Jim Green',
-                    age: 24,
-                    address: 'London No. 1 Lake Park',
-                    date: '2016-10-01',
-                },
-                {
-                    name: 'Joe Black',
-                    age: 30,
-                    address: 'Sydney No. 1 Lake Park',
-                    date: '2016-10-02',
-                },
-                {
-                    name: 'Jon Snow',
-                    age: 26,
-                    address: 'Ottawa No. 2 Lake Park',
-                    date: '2016-10-04',
-                },
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park',
-                    date: '2016-10-03',
-                },
-                {
-                    name: 'Jim Green',
-                    age: 24,
-                    address: 'London No. 1 Lake Park',
-                    date: '2016-10-01',
-                },
-                {
-                    name: 'Joe Black',
-                    age: 30,
-                    address: 'Sydney No. 1 Lake Park',
-                    date: '2016-10-02',
-                },
-                {
-                    name: 'Jon Snow',
-                    age: 26,
-                    address: 'Ottawa No. 2 Lake Park',
-                    date: '2016-10-04',
-                },
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park',
-                    date: '2016-10-03',
-                },
-                {
-                    name: 'Jim Green',
-                    age: 24,
-                    address: 'London No. 1 Lake Park',
-                    date: '2016-10-01',
-                },
-                {
-                    name: 'Joe Black',
-                    age: 30,
-                    address: 'Sydney No. 1 Lake Park',
-                    date: '2016-10-02',
-                },
-                {
-                    name: 'Jon Snow',
-                    age: 26,
-                    address: 'Ottawa No. 2 Lake Park',
-                    date: '2016-10-04',
-                },
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park',
-                    date: '2016-10-03',
-                },
-                {
-                    name: 'Jim Green',
-                    age: 24,
-                    address: 'London No. 1 Lake Park',
-                    date: '2016-10-01',
-                },
-                {
-                    name: 'Joe Black',
-                    age: 30,
-                    address: 'Sydney No. 1 Lake Park',
-                    date: '2016-10-02',
-                },
-                {
-                    name: 'Jon Snow',
-                    age: 26,
-                    address: 'Ottawa No. 2 Lake Park',
-                    date: '2016-10-04',
-                },
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park',
-                    date: '2016-10-03',
-                },
-                {
-                    name: 'Jim Green',
-                    age: 24,
-                    address: 'London No. 1 Lake Park',
-                    date: '2016-10-01',
-                },
-                {
-                    name: 'Joe Black',
-                    age: 30,
-                    address: 'Sydney No. 1 Lake Park',
-                    date: '2016-10-02',
-                },
-                {
-                    name: 'Jon Snow',
-                    age: 26,
-                    address: 'Ottawa No. 2 Lake Park',
-                    date: '2016-10-04',
-                },
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park',
-                    date: '2016-10-03',
-                },
-                {
-                    name: 'Jim Green',
-                    age: 24,
-                    address: 'London No. 1 Lake Park',
-                    date: '2016-10-01',
-                },
-                {
-                    name: 'Joe Black',
-                    age: 30,
-                    address: 'Sydney No. 1 Lake Park',
-                    date: '2016-10-02',
-                },
-                {
-                    name: 'Jon Snow',
-                    age: 26,
-                    address: 'Ottawa No. 2 Lake Park',
-                    date: '2016-10-04',
-                },
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park',
-                    date: '2016-10-03',
-                },
-                {
-                    name: 'Jim Green',
-                    age: 24,
-                    address: 'London No. 1 Lake Park',
-                    date: '2016-10-01',
-                },
-                {
-                    name: 'Joe Black',
-                    age: 30,
-                    address: 'Sydney No. 1 Lake Park',
-                    date: '2016-10-02',
-                },
-                {
-                    name: 'Jon Snow',
-                    age: 26,
-                    address: 'Ottawa No. 2 Lake Park',
-                    date: '2016-10-04',
-                },
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park',
-                    date: '2016-10-03',
-                },
-                {
-                    name: 'Jim Green',
-                    age: 24,
-                    address: 'London No. 1 Lake Park',
-                    date: '2016-10-01',
-                },
-                {
-                    name: 'Joe Black',
-                    age: 30,
-                    address: 'Sydney No. 1 Lake Park',
-                    date: '2016-10-02',
-                },
-                {
-                    name: 'Jon Snow',
-                    age: 26,
-                    address: 'Ottawa No. 2 Lake Park',
-                    date: '2016-10-04',
-                },
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park',
-                    date: '2016-10-03',
-                },
-                {
-                    name: 'Jim Green',
-                    age: 24,
-                    address: 'London No. 1 Lake Park',
-                    date: '2016-10-01',
-                },
-                {
-                    name: 'Joe Black',
-                    age: 30,
-                    address: 'Sydney No. 1 Lake Park',
-                    date: '2016-10-02',
-                },
-                {
-                    name: 'Jon Snow',
-                    age: 26,
-                    address: 'Ottawa No. 2 Lake Park',
-                    date: '2016-10-04',
+                    title: '创建时间',
+                    key: 'createTime',
                 },
             ],
+            tableData: [],
         }
+    },
+    created() {
+        // debugger
+        this.isShowLoading = true
+        this.$axios.get('/tools/generator/page')
+        .then(response => {
+            this.tableData = response
+        }).catch(error => {
+            console.log(error)
+            this.isShowLoading = false
+        })
+    },
+    methods: {
+        handleSelectAll(status) {
+            this.$refs.selection.selectAll(status)
+        },
+        generateSelected() {
+            let arraySelected = this.$refs.selection.getSelection()
+            if (!arraySelected || arraySelected.length == 0) {
+                alert('请选择需要生成的表')
+                return
+            }
+            let reqParams = ''
+            arraySelected.forEach((value, index) => {
+                reqParams += value.tableName + ','
+            })
+            this.isShowLoading = true
+            // this.$axios.get('/tools/generator/code?tables=' + reqParams, { responseType: 'blob' })
+            // this.$axios.get('http://localhost:8082/tools/generator/code/', {
+            this.$axios.get('/tools/generator/code/', {
+                params: {
+                    tables: reqParams,
+                    responseType: 'blob', // 服务器返回的数据类型
+                },
+            },)
+            .then(response => {
+                // const typeRes = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' // excel文件
+                const typeRes = 'application/zip'// ZIP文件
+                let blob = new Blob([response])
+                let downloadElement = document.createElement('a')
+                let href = window.URL.createObjectURL(blob) // 创建下载的链接
+                downloadElement.href = href
+                downloadElement.download = '用户数据.zip' // 下载后文件名
+                document.body.appendChild(downloadElement)
+                downloadElement.click() // 点击下载
+                document.body.removeChild(downloadElement)// 下载完成移除元素
+                window.URL.revokeObjectURL(href) // 释放掉blob对象
+                console.log(response)
+                this.isShowLoading = false
+            }).catch(error => {
+                console.log(error)
+                this.isShowLoading = false
+            })
+        },
     },
 }
 </script>
